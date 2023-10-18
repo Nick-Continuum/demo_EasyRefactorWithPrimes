@@ -6,8 +6,9 @@ public class Prime {
     private final int primeNumber;
 
     public Prime(int potentialPrimeNumber) {
-        potentialPrimeNumber = validatePotentialPrime(potentialPrimeNumber);
-        this.primeNumber = calculateNextPrime(potentialPrimeNumber);
+        this.primeNumber = calculateNextPrime(
+                validatePotentialPrime(potentialPrimeNumber)
+        );
     }
 
     public Prime(Prime knownPrime) {
@@ -24,13 +25,9 @@ public class Prime {
     }
 
     private boolean isPrime(int number) {
-        if (number < 2) {
-            return false;
-        }
+        if (number < 2) return false;
         for (int i = 2; i < number; i++) {
-            if ( number % i == 0 ) {
-                return false;
-            }
+            if ( number % i == 0 ) return false;
         }
         return true;
     }

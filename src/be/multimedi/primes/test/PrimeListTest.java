@@ -15,10 +15,10 @@ public class PrimeListTest {
     private static void createsPrimeListCorrectly() {
         System.out.println("Prime List class created the correct prime list with the given limit");
 
-        System.out.println("is " + (v1.getPrimes().length == 4));
-        System.out.println("is " + (v2.getPrimes().length == 5));
-        System.out.println("is " + (v3.getPrimes().length == 11));
-        System.out.println("is " + (v4.getPrimes().length == 36));
+        System.out.println("is " + (v1.getPrimes().size() == 4));
+        System.out.println("is " + (v2.getPrimes().size() == 5));
+        System.out.println("is " + (v3.getPrimes().size() == 11));
+        System.out.println("is " + (v4.getPrimes().size() == 36));
 
         System.out.println(" ");
     }

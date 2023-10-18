@@ -1,18 +1,19 @@
 package be.multimedi.primes.domain;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PrimeFactorial {
     private final int numberToProcess;
     private final PrimesList primes;
-    private final Prime[] primeFactors;
+    private final List<Prime> primeFactors;
     public PrimeFactorial(int numberToSplit) {
         this.numberToProcess = numberToSplit;
         primes = new PrimesList(numberToSplit);
-        primeFactors = calculatePrimeFactors(numberToSplit);
+        primeFactors = calculatePrimeFactors();
     }
 
-    public Prime[] getPrimeFactors() {
+    public List<Prime> getPrimeFactors() {
         return primeFactors;
     }
 
@@ -24,16 +25,15 @@ public class PrimeFactorial {
         return primes;
     }
 
-    public Prime[] calculatePrimeFactors(int numberWithinRange) {
-        if (numberWithinRange > numberToProcess) throw new IllegalArgumentException("number must be smaller than the initial number to process");
+    private List<Prime> calculatePrimeFactors() {
+        int reducableNumber = numberToProcess;
 
-        Prime[] tempPrimeFactors = new Prime[] {};
-        while (numberWithinRange > 1) {
-            for (int i = 0; i < primes.getPrimes().length; i++) {
-                if (numberWithinRange % primes.getPrimes()[i].getValue() == 0) {
-                    tempPrimeFactors = Arrays.copyOf(tempPrimeFactors, tempPrimeFactors.length + 1);
-                    tempPrimeFactors[tempPrimeFactors.length - 1] = primes.getPrimes()[i];
-                    numberWithinRange /= primes.getPrimes()[i].getValue();
+        List<Prime> tempPrimeFactors = new ArrayList<>();
+        while (reducableNumber > 1) {
+            for (Prime prime: primes.getPrimes()) {
+                if (reducableNumber % prime.getValue() == 0) {
+                    tempPrimeFactors.add(prime);
+                    reducableNumber /= prime.getValue();
                     break;
                 }
             }
@@ -44,9 +44,9 @@ public class PrimeFactorial {
 
     public String represent() {
         StringBuilder representation = new StringBuilder(numberToProcess + " = ");
-        for (int i = 0; i < primeFactors.length; i++) {
-            representation.append(primeFactors[i]);
-            if (i < primeFactors.length - 1) {
+        for (int i = 0; i < primeFactors.size(); i++) {
+            representation.append(primeFactors.get(i));
+            if (i < primeFactors.size() - 1) {
                 representation.append(" * ");
             }
         }

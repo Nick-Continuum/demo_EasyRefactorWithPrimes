@@ -14,7 +14,7 @@ public class PrimeFactorial {
     }
 
     public List<Prime> getPrimeFactors() {
-        return primeFactors;
+        return new ArrayList<>(primeFactors);
     }
 
     public int getNumberToProcess() {
@@ -26,20 +26,24 @@ public class PrimeFactorial {
     }
 
     private List<Prime> calculatePrimeFactors() {
+        List<Prime> tempPrimeFactors = new ArrayList<>();
         int reducableNumber = numberToProcess;
 
-        List<Prime> tempPrimeFactors = new ArrayList<>();
         while (reducableNumber > 1) {
-            for (Prime prime: primes.getPrimes()) {
-                if (reducableNumber % prime.getValue() == 0) {
-                    tempPrimeFactors.add(prime);
-                    reducableNumber /= prime.getValue();
-                    break;
-                }
-            }
+            tempPrimeFactors.add(calculateNextPrimeFactor(reducableNumber));
+            reducableNumber /= tempPrimeFactors.getLast().getValue();
         }
 
         return tempPrimeFactors;
+    }
+
+    private Prime calculateNextPrimeFactor(int dividableNumber) {
+        for (Prime prime: primes.getPrimes()) {
+            if (dividableNumber % prime.getValue() == 0) {
+                return prime;
+            }
+        }
+        return new Prime(dividableNumber);
     }
 
     public String represent() {
